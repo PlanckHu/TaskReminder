@@ -14,9 +14,33 @@
 
   整个程序的组织结构基本上是围绕界面来进行的。于是就写这个界面的构成吧。
   
-  ### MainActivity
+### MainActivity
 
----
+大概结构就是
+  ```
+  --recyclerview
+      |--recyclerview(unfinished task)
+      |   |--single_task_layout
+      |   |-single_task_layout
+      |   ...
+      |--recyclerview(finished task)
+          |--single_task_layout
+          ...
+   ```
+   
+### InfoPanel
+
+弹出信息窗口的同时，用半透明的遮罩覆盖底部的 MainActivity
+大概结构
+```
+  --ConstraintLayout(black; alpha = 0.7)
+    |-ConstraintLayout(white; background = @drawable/panel_border)
+      |- TextView & EditText
+      ...
+```
+内层的 ConstraintLayout 用的背景图层是自己写的一个边框层【一开始没想用底层遮罩的时候写的，用了之后想着，写都写了还挺好看用上呗=。=
+
+
 ## 总结
 算起来做这个的总时间只有6天，每天3~4小时的样子,这么看的话要是每天从早肝到晚，可能一两天就能搞定了【秃头警告
 
@@ -26,7 +50,6 @@
 
 比如说：
 
----
 最后分出了3个功能类型的类【不知道这么说准不准确】
 
 ```
@@ -74,10 +97,10 @@ AniamtionOperatior 用于执行动画，包含以下静态参数和方法
 ```
 
 问题【需改进】
-1. 类内的相似功能函数不够规范。函数之间的返回值与调用参数都有不同，这样调用的时候会让人摸不着头脑。写这些代码的时候由于是分开写的，所以还真没多大感觉，
+1. 类内的相似功能函数不够规范。函数之间的返回值与调用参数都有不同，这样调用的时候会让人摸不着头脑【甚至把自己写懵=。=】。写这些代码的时候由于是分开写的，所以还真没多大感觉，
 现在看起来就是乱七八糟了
 2. AnimationOperator 里的 infoPanelIn() 函数。传入参数SingleTask其实只是为了最后能为infoPanel进行初始化。这个小功能点应该从这个函数中分离才对。
-3. 是不是真的有必要？这个要之后好好想一下。 **因为从内存的方面来看，这样似乎会占用很多的资源，还从不释放**这句话未经考据
+3. 是不是真的有必要？这个要之后好好想一下。 **因为从内存的方面来看，这样似乎会占用很多的资源，还从不释放**  (这句话未经考据
 4. 续3.比如 LocalReceiver 应该是包含多个 **本地广播接收器** 的类，而不是将一个接收器就作为一个类
 5. 当然上面得到的这些需改进的地方，可能这个想法就是错的。多敲代码就知道了。
 还有。为啥 Android studio 的 version control 老是不能直接连上git。待我搞搞
