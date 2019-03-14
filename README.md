@@ -15,27 +15,7 @@
   整个程序的组织结构基本上是围绕界面来进行的。于是就写这个界面的构成吧。
   
   ### MainActivity
-  
-  ```
-    <RecyclerView >
-      orientation = horizontal
-				<RecyclerView
-					orientation = verticle>
-						// finished task
-						<single_task_layout/>
-						<single_task_layout/>
-				</RecyclerView>
 
-				<RecyclerView
-					orientation = verticle>
-						// unfinished task
-						<single_task_layout/>
-						<single_task_layout/>
-				</RecyclerView>
-    </RecyclerView>
-  ```
-  大概是这么个结构
-  
 ---
 ## 总结
 算起来做这个的总时间只有6天，每天3~4小时的样子,这么看的话要是每天从早肝到晚，可能一两天就能搞定了【秃头警告
