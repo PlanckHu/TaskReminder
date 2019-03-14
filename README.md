@@ -104,3 +104,5 @@ AniamtionOperatior 用于执行动画，包含以下静态参数和方法
 4. 续3.比如 LocalReceiver 应该是包含多个 **本地广播接收器** 的类，而不是将一个接收器就作为一个类
 5. 当然上面得到的这些需改进的地方，可能这个想法就是错的。多敲代码就知道了。
 还有。为啥 Android studio 的 version control 老是不能直接连上git。待我搞搞
+
+> 哦忘了说。用的图片素材来自 [easyicon](https://www.easyicon.net/)
