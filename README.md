@@ -113,6 +113,35 @@ AniamtionOperatior 用于执行动画，包含以下静态参数和方法
 2. 名称排序，时间排序
 3. 之前的这个似乎是一旋转就死，那么就解决这个问题顺便做个好看点的旋转变换效果吧，就是竖屏->横屏  横屏->竖屏
 4. 如果上面的全部弄完，就加入任务下的子任务划分功能 & 甘特图功能吧
+
 update 2019.6.18
 
 ---
+
+遇到了一个问题，用了我没有想到过的方法来解决，记录一下【太强了orz...这大概就是从源头出发找解决方法吧
+
+问题是这样的：在用 ViewPager 的时候，我将他设定为----数据更新一次，ViewPager 就进行一次初始化【我觉得这不是一个好的办法，之后继续想想别的解决方案】---在初始化之后，页面会自动跳转到第0个界面（也就是adapter的初始位置默认值为0）,如果在初始化后马上跳转到想要的页面（比如1），会造成页面闪烁。于是可以对adapter初始化后用反射机制修改初始值
+```java
+private static void initViewPager(int position){
+        final ViewPager viewPager = main.findViewById(R.id.view_pager);
+        viewPager.setAdapter(initViewPageAdapter());
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            //...
+        });
+
+        // 下面这段是用反射的方法将adapter的默认初始值改变为position
+        // 太强了orz...
+        try {
+            Class c = Class.forName("android.support.v4.view.ViewPager");
+            Field field = c.getDeclaredField("mCurItem");
+            field.setAccessible(true);
+            field.setInt(viewPager,position);
+        } catch (ClassNotFoundException | NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        viewPager.getAdapter().notifyDataSetChanged();
+        setDataChanged(false);
+    }
+```
+
+update 2019.6.30
