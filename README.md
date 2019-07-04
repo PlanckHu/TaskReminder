@@ -120,7 +120,7 @@ update 2019.6.18
 
 遇到了一个问题，用了我没有想到过的方法来解决，记录一下【太强了orz...这大概就是从源头出发找解决方法吧
 
-问题是这样的：在用 ViewPager 的时候，我将他设定为----数据更新一次，ViewPager 就进行一次初始化【我觉得这不是一个好的办法，之后继续想想别的解决方案】---在初始化之后，页面会自动跳转到第0个界面（也就是adapter的初始位置默认值为0）,如果在初始化后马上跳转到想要的页面（比如1），会造成页面闪烁。于是可以对adapter初始化后用反射机制修改初始值
+问题是这样的：在用 ViewPager 的时候，我将他设定为在第 N 个页面进行刷新后，页面刷新，但仍然保持在页面 N。我所使用的页面刷新方法是，数据更新一次，ViewPager 就进行一次初始化【我觉得这不是一个好的办法，之后继续想想别的解决方案】。可是在ViewPager的默认设置中，一旦初始化，页面会自动跳转到第0个界面（也就是adapter的初始位置默认值为0）,如果在初始化后马上跳转到想要的页面（比如1），会造成页面闪烁。于是可以对adapter初始化后用反射机制修改初始值
 ```java
 private static void initViewPager(int position){
         final ViewPager viewPager = main.findViewById(R.id.view_pager);
@@ -145,3 +145,63 @@ private static void initViewPager(int position){
 ```
 
 update 2019.6.30
+
+---
+
+之前由于只有3个页面，于是当数据改变时，第二个页面永远不会刷新，
+* 在第 1 个页面时，缓存第1，2个页面
+* 在第 2 个页面时，缓存第1，2，3个页面
+* 在第 3 个页面时，缓存第2，3个页面
+
+就很尴尬
+
+终于找到了正确的页面刷新方法orz
+
+用checkbox来举例子：
+
+首先设置一个数组用于记录数据改变后，页面是否也刷新过了
+> private static boolean[] pageRenewed = new boolean[3];
+
+1. 一旦点击了页面中某一项的checkbox，改变了他的值，会触发以下动作
+```java
+    // DataCache中记录下该条目的改变，将 pageRenewed 里的每一项设为false，然后开始刷新页面
+    public void setTaskFinished(int id, boolean finished) {
+        DataCache dataCache = DataCache.getInstance();
+        dataCache.reviseFinished(id, finished);
+        for (int i = 0; i < 3; i++) {
+            setPageRenewed(false, i);
+        }
+        ViewPager viewPager = main.findViewById(R.id.view_pager);
+        viewPager.getAdapter().notifyDataSetChanged();
+    }
+```
+2. 重写ViewPagerAdapter的instantiateItem(@NonNull ViewGroup container, int position)。给页面加入tag，方便之后我们知道该页面是在哪个位置上的。且由于该函数在每次页面初始化时调用，所以可以在该函数中设置对应的 pageRenewed值为true
+```java
+    @Override
+    public Object instantiateItem(@NonNull ViewGroup container, int position) {
+        View view = datas.get(position);
+        view.setTag(position);
+        ViewPagerOperator.initRecyclerView(view, position);
+        ViewPagerOperator.setPageRenewed(true, position);
+        Log.d(TAG, "viewpage " + position);
+        container.addView(view);
+        return view;
+    }
+```
+3. 接着重写ViewPagerAdapter的 getItemPosition(Object object)，使其根据 pageRenewed 来返回 POSITION_NONE/POSITION_UNCHANGED, **返回 POSITION_NONE 表示页面需要刷新，返回 POSITION_UNCHANGED 表示页面不需要刷新**
+```java
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        int tag = (int) ((View) object).getTag();
+        if (ViewPagerOperator.getPageRenewed(tag))
+            return POSITION_UNCHANGED;
+        else
+            return POSITION_NONE;
+    }
+```
+
+于是就都串起来了，在改变了checkbox值后，刷新了当前页面（其实应该也刷新了缓存页面）。然后在进入无缓存页面时，也由于本来的初始化刷新了数据。也不用每次进入页面都完全初始化一次搞得巨卡了
+
+可喜可贺可喜可贺
+
+update 2019.7.4
