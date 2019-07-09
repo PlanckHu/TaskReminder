@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-// TODO:用单例模式和静态
 public class ViewPagerOperator {
 
     private static final int pageNum = 3;
@@ -38,7 +37,6 @@ public class ViewPagerOperator {
         initViewPager(0);
     }
 
-    // TODO: 怎么更新数据！
     private static void initViewPager(int position) {
         final ViewPager viewPager = main.findViewById(R.id.view_pager);
         viewPager.setAdapter(initViewPageAdapter());
