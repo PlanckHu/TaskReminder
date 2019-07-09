@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.InfoEditActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/info_edit_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <EditText
+        android:id="@+id/task_conclusion_input"
+        android:hint="填入概述"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:minEms="10"
+        android:textSize="20dp"
+        android:maxLines="1"
+        android:inputType="textMultiLine"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/info_edit_toolbar" />
+
+    <EditText
+        android:id="@+id/task_start_time_input"
+        android:inputType="date"
+        android:ems="8"
+        app:layout_constraintTop_toBottomOf="@id/task_conclusion_input"
+        android:maxLines="1"
+        android:hint="@string/start_time_hint"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp" />
+    <EditText
+        android:id="@+id/task_end_time_input"
+        android:inputType="date"
+        android:ems="8"
+        app:layout_constraintTop_toBottomOf="@id/task_conclusion_input"
+        android:maxLines="1"
+        android:hint="@string/end_time_hint"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp" />
+
+    <EditText
+        android:hint="填入详细内容"
+        android:id="@+id/content_input"
+        android:inputType="textMultiLine"
+        android:minLines="1"
+        android:ems="17"
+        app:layout_constraintTop_toBottomOf="@id/task_start_time_input"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <!--下面可以以后加入图片啥的
+        把各个文本框的样式做好看点啥的
+        先做功能
+        别的之后再说-->
+
+</android.support.constraint.ConstraintLayout>

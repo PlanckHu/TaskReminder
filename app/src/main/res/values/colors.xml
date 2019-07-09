@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#ffffff</color>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#d81b60</color>
+    <color name="btnFocus">#d45e89</color>
+    <color name="colorFocus">#1c5353</color>
+    <color name="colorIgnore">#881c5353</color>
+    <color name="colorChecked">#918080</color>
+    <color name="lightGrey">#dfdcdc</color>
+    <color name="transparency">#00ffffff</color>
+    <color name="backgroundLightGrey">#e7e3e3</color>
+</resources>

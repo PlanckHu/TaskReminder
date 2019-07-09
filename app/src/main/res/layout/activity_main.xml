@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_activity_root_layout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.MainActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    <android.support.constraint.Guideline
+        android:id="@+id/vertical_name_start_guideline"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/vertical_half_guideline"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/vertical_time_separate_guideline"
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        app:layout_constraintGuide_percent="0.7"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/vertical_time_end_guideline"
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        app:layout_constraintGuide_percent="0.9"/>
+
+    <Button
+        android:id="@+id/all_title_btn"
+        android:text="@string/all_button"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintWidth_percent="0.33"
+        android:onClick="OnClickAllButton"/>
+
+    <Button
+        android:id="@+id/undone_title_btn"
+        android:text="@string/undone_button"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintLeft_toRightOf="@+id/all_title_btn"
+        app:layout_constraintWidth_percent="0.33"
+        android:onClick="OnClickUndoneButton"/>
+
+    <Button
+        android:id="@+id/done_title_btn"
+        android:text="@string/done_button"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintLeft_toRightOf="@id/undone_title_btn"
+        app:layout_constraintWidth_percent="0.33"
+        android:onClick="OnClickDoneButton"/>
+
+    <TextView
+        android:id="@+id/classifying_btn_hint"
+        app:layout_constraintStart_toStartOf="@id/all_title_btn"
+        app:layout_constraintEnd_toEndOf="@id/all_title_btn"
+        app:layout_constraintBottom_toBottomOf="@id/all_title_btn"
+        android:background="@color/btnFocus"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_width="0dp"
+        android:layout_height="3dp" />
+    <!--开始hint -->
+    <TextView
+        android:id="@+id/hint_background_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/all_title_btn"
+        app:layout_constraintBottom_toBottomOf="@id/name_of_task_text_view_hint"
+        android:background="@color/lightGrey"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"/>
+    <TextView
+        android:id="@+id/name_of_task_text_view_hint"
+        android:text="@string/task_name_hint"
+        app:layout_constraintStart_toEndOf="@id/vertical_name_start_guideline"
+        app:layout_constraintEnd_toStartOf="@id/vertical_half_guideline"
+        app:layout_constraintTop_toBottomOf="@id/all_title_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"/>
+
+
+    <TextView
+        android:id="@+id/start_time_text_view_hint"
+        app:layout_constraintStart_toEndOf="@id/vertical_half_guideline"
+        app:layout_constraintEnd_toStartOf="@id/vertical_time_separate_guideline"
+        app:layout_constraintTop_toBottomOf="@id/all_title_btn"
+        android:text="@string/start_time_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"/>
+    <TextView
+        android:id="@+id/end_time_text_view"
+        android:text="@string/end_time_hint"
+        app:layout_constraintStart_toEndOf="@id/vertical_time_separate_guideline"
+        app:layout_constraintEnd_toEndOf="@id/vertical_time_end_guideline"
+        app:layout_constraintTop_toBottomOf="@id/all_title_btn"
+        android:layout_marginLeft="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"/>
+
+    <!--正文 - pages-->
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        app:layout_constraintTop_toBottomOf="@id/name_of_task_text_view_hint"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
+</android.support.constraint.ConstraintLayout>
